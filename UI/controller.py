@@ -33,9 +33,32 @@ class Controller:
         componentiConnesse=self._model.componenentiConnesse()
         self._view._txt_result.controls.append(ft.Text("Grafo correttamente creato"))
         self._view._txt_result.controls.append(ft.Text(f"Il grafo ha {componentiConnesse} componenti connesse"))
-        for v in self._model.nazioni():
+        for v in self._model._nazioni:
             numero=self._model.getConnessa(v.CCode)
             self._view._txt_result.controls.append(ft.Text(f"{v.StateNme} -- {numero} vicini."))
+        self._view._stato.disabled=False
+        self._view._statiRaggiungibili.disabled=False
+        self.popolaStato()
         self._view.update_page()
+
+    def popolaStato(self):
+        for v in self._model._nazioni:
+            self._view._stato.options.append(ft.dropdown.Option(key=v.CCode,text=v.StateAbb,data=v, on_click=self.readStato))
+        self._view.update_page()
+
+    def readStato(self,e):
+        if e.control.data is None:
+            self._stato=None
+        else:
+            self._stato=e.control.data
+
+    def handleCalcolaStati(self,e):
+        try:
+            id=int(self._view._stato.value)
+        except ValueError:
+            self._view.controls.append(ft.Text("ERRORE"))
+            return
+        self._model.dfsConnessa(id)
+        pass
 
 

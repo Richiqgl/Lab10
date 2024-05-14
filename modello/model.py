@@ -7,7 +7,7 @@ class Model:
 
     def __init__(self):
         self._grafo = nx.Graph()
-        self._nazioni=None
+        self._nazioni=[]
 
     def creaGrafo(self,anno):
         self._nazioni = DAO.getNazioni(anno)
@@ -29,8 +29,6 @@ class Model:
     def numEdges(self):
         return self._grafo.number_of_edges()
 
-    def nazioni(self):
-        return self._nazioni
 
     def componenentiConnesse(self):
         print(nx.number_connected_components(self._grafo))
@@ -40,3 +38,12 @@ class Model:
         vo=self.idMap[codice]
         vicini=list(nx.neighbors(self._grafo,vo))
         return len(vicini)
+
+    def dfsConnessa(self,id):
+        vo=self.idMap[id]
+        successors=nx.dfs_successors(self._grafo,vo)
+        allSucc=[]
+        for v in successors.values():
+            allSucc.extend(v)
+        return allSucc
+

@@ -22,7 +22,7 @@ class View(ft.UserControl):
         self._page.controls.append(self._title)
 
         #ROW with controls
-        self._txtAnno = ft.TextField(label="Anno",on_change=self._controller.leggiAnno)
+        self._txtAnno = ft.TextField(label="Anno")
         self._btnCalcola = ft.ElevatedButton(text="Calcola Confini", on_click=self._controller.handleCalcola)
         row1 = ft.Row([self._txtAnno, self._btnCalcola], alignment=ft.MainAxisAlignment.CENTER)
         self._page.controls.append(row1)

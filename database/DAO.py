@@ -16,11 +16,12 @@ class DAO():
         query = """SELECT c.*
                 FROM country c 
                 WHERE c.CCode in (SELECT state1no AS stato 
-                FROM contiguity WHERE `year` <= %s AND conttype = 1 
+                FROM contiguity WHERE `year` <= %s 
                 UNION
                 SELECT state2no AS stato
                 FROM contiguity
-                WHERE `year` <= %s AND conttype = 1)"""
+                WHERE `year` <= %s  )
+                ORDER BY c.StateNme ASC"""
         cursor.execute(query, (anno,anno))
 
         for row in cursor:

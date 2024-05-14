@@ -31,7 +31,6 @@ class Model:
 
 
     def componenentiConnesse(self):
-        print(nx.number_connected_components(self._grafo))
         return len(list(nx.connected_components(self._grafo)))
 
     def getConnessa(self,codice):
@@ -41,9 +40,9 @@ class Model:
 
     def dfsConnessa(self,id):
         vo=self.idMap[id]
-        successors=nx.dfs_successors(self._grafo,vo)
-        allSucc=[]
-        for v in successors.values():
-            allSucc.extend(v)
-        return allSucc
+        tree=nx.dfs_tree(self._grafo,vo)
+        nodi=list(tree.nodes)
+        print(nodi)
+        return nodi[1:]
+
 

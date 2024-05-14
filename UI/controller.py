@@ -53,12 +53,19 @@ class Controller:
             self._stato=e.control.data
 
     def handleCalcolaStati(self,e):
+        self._view._txt_result.controls.clear()
         try:
             id=int(self._view._stato.value)
         except ValueError:
             self._view.controls.append(ft.Text("ERRORE"))
             return
-        self._model.dfsConnessa(id)
-        pass
+        nodi=self._model.dfsConnessa(id)
+        if len(nodi)==0:
+            self._view._txt_result.controls.append(ft.Text("Nessuno Stato raggiungibile via terra"))
+            self._view.update_page()
+            return
+        for v in nodi:
+            self._view._txt_result.controls.append(ft.Text(v))
+        self._view.update_page()
 
 
